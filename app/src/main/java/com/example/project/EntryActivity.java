@@ -16,6 +16,7 @@ public class EntryActivity extends AppCompatActivity {
     EditText comment;
     RatingBar ratingBar;
     float rateValue;
+    String commentText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,7 @@ public class EntryActivity extends AppCompatActivity {
         setContentView(R.layout.entry_activity);
 
         TextView movieNameTxt = findViewById(R.id.movieNameTextViewid);
-        submitButton = (Button) findViewById(R.id.searchButtonID);
+        submitButton = (Button) findViewById(R.id.submitButtonid);
         comment = (EditText) findViewById(R.id.editTextCommentid);
         ratingBar = (RatingBar) findViewById(R.id.ratingBarid);
 
@@ -34,14 +35,31 @@ public class EntryActivity extends AppCompatActivity {
             moviename = extras.getString("moviename");
         }
         movieNameTxt.setText(moviename);
+        commentText = comment.getText().toString();
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
                 rateValue = ratingBar.getRating();
-                Entry entry = new Entry();
-                entry.setNumberOfStars(rateValue);
             }
         });
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                commentText = comment.getText().toString();
+                Entry entry = new Entry(rateValue, commentText);
+                /*Stars star = new Stars();
+                star.setNumberOfStars(rateValue);
+                Comment com = new Comment();
+                com.setComment(commentText);*/
+                openMainActivity();
+            }
+            public void openMainActivity(){
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 }

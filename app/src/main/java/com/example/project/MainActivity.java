@@ -43,14 +43,6 @@ public class MainActivity extends AppCompatActivity {
     public void listMovies(View v) {
 
     }
-    public void submit(View v) {
-        openMainActivity();
-    }
-
-    private void openMainActivity () {
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
-    }
 
     private void setAdapter() {
         setOnClickListener();

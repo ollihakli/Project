@@ -1,20 +1,13 @@
 package com.example.project;
 
-import java.util.Date;
-
 public class Entry {
 
     private float numberOfStars;
     private String comment;
 
-    public Entry() {}
-
-    public void setNumberOfStars(float f){
+    public Entry(float f, String s) {
         numberOfStars = f;
-        System.out.println(numberOfStars);
+        comment = s;
     }
-    public void setComment() {
 
-    }
 }
-
