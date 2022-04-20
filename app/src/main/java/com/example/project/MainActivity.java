@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<Movie> movieList;
     private RecyclerView recyclerView;
+    private RecyclerAdapter.RecyclerViewClickListener listener;
 
     Button searchButton;
     Button listButton;
@@ -37,15 +39,36 @@ public class MainActivity extends AppCompatActivity {
     public void searchMovies (View v) {
         movieList = XmlReader.readXml(movieList);
         setAdapter();
+    }
+    public void listMovies(View v) {
 
+    }
+    public void submit(View v) {
+        openMainActivity();
+    }
 
+    private void openMainActivity () {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     private void setAdapter() {
-        RecyclerAdapter adapter = new RecyclerAdapter(movieList);
+        setOnClickListener();
+        RecyclerAdapter adapter = new RecyclerAdapter(movieList, listener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
+    }
+
+    private void setOnClickListener() {
+        listener = new RecyclerAdapter.RecyclerViewClickListener() {
+            @Override
+            public void onClick(View v, int position) {
+                Intent intent = new Intent(getApplicationContext(), EntryActivity.class);
+                intent.putExtra("moviename", movieList.get(position).getMovieName());
+                startActivity(intent);
+            }
+        };
     }
 }
