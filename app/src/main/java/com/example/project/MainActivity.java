@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+    Context context = null;
+
     private ArrayList<Movie> movieList;
     private RecyclerView recyclerView;
     private RecyclerAdapter.RecyclerViewClickListener listener;
@@ -22,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     Button searchButton;
     Button listButton;
 
+
+    MovieManager mm = MovieManager.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
+        context = MainActivity.this;
+        mm.setContext(context);
+
+        System.out.println(getFilesDir());
         movieList = new ArrayList<>();
 
         searchButton = (Button) findViewById(R.id.searchButtonID);
@@ -38,15 +47,15 @@ public class MainActivity extends AppCompatActivity {
     }
     public void searchMovies (View v) {
         movieList = XmlReader.readXml(movieList);
-        setAdapter();
+        setAdapter(movieList);
     }
     public void listMovies(View v) {
-
+        MovieManager.getInstance().readEntries();
     }
 
-    private void setAdapter() {
+    private void setAdapter(ArrayList<Movie> list) {
         setOnClickListener();
-        RecyclerAdapter adapter = new RecyclerAdapter(movieList, listener);
+        RecyclerAdapter adapter = new RecyclerAdapter(list, listener);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());

@@ -16,7 +16,8 @@ public class EntryActivity extends AppCompatActivity {
     EditText comment;
     RatingBar ratingBar;
     float rateValue;
-    String commentText;
+    String commentText, movieName;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +44,15 @@ public class EntryActivity extends AppCompatActivity {
                 rateValue = ratingBar.getRating();
             }
         });
+        String finalMoviename = moviename;
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 commentText = comment.getText().toString();
-                Entry entry = new Entry(rateValue, commentText);
+                Entry entry = new Entry(finalMoviename, rateValue, commentText);
+                MovieManager.getInstance().saveEntries(entry);
+
+
                 /*Stars star = new Stars();
                 star.setNumberOfStars(rateValue);
                 Comment com = new Comment();
