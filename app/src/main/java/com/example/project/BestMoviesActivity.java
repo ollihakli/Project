@@ -8,19 +8,27 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+
 public class BestMoviesActivity extends AppCompatActivity {
     TextView txt;
     Button backButton;
+    ArrayList<Entry> bestMovies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.best_movies_activity);
 
+        bestMovies = new ArrayList<>();
+
         txt = (TextView) findViewById(R.id.bestMoviesTextViewid);
         backButton = (Button) findViewById(R.id.backButtonid);
         String s="";
-        s = MovieManager.getInstance().readEntries();
+        bestMovies = MovieManager.getInstance().readEntries();
+        for(int i = 0; i < bestMovies.size(); i++) {
+            System.out.println(bestMovies.get(i));
+        }
         System.out.println(s);
         txt.setText(s);
 

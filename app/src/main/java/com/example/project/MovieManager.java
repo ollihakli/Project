@@ -1,5 +1,6 @@
 package com.example.project;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.widget.TextView;
 
@@ -13,12 +14,14 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 
 class MovieManager {
 
-    private ArrayList<Entry> bestMovies;
+    private ArrayList<Entry> entryList;
 
     private static MovieManager instance = null;
     private Entry entry;
@@ -34,6 +37,10 @@ class MovieManager {
         return instance;
     }
 
+    /*public void addEntry(Entry e){
+        entryList.add(e);
+    }*/
+
     public void setContext(Context c) {
         context = c;
     }
@@ -42,7 +49,7 @@ class MovieManager {
 
         try {
 
-            OutputStreamWriter ous = new OutputStreamWriter(context.openFileOutput("testi.csv", Context.MODE_PRIVATE));
+            OutputStreamWriter ous = new OutputStreamWriter(context.openFileOutput("testi.csv", Context.MODE_APPEND));
             //float f;
             //String com = getEntry().getComment();
             //f = getEntry().getNumberOfStars();
@@ -51,7 +58,7 @@ class MovieManager {
             System.out.println("kirjoitettu");
             out.writeObject(e); // This can be a data structure
             out.close();*/
-            ous.write(e.getMovie() + e.getComment() + e.getNumberOfStars());
+            ous.write(e.getMovie() + ";" + e.getComment() + ";" + e.getNumberOfStars() + "\n");
 
             //ous.write(com +";"+ Float.toString(f));
             ous.close();
@@ -67,11 +74,15 @@ class MovieManager {
         return entry;
     }
 
-    public String readEntries() {
+    @SuppressLint("NewApi")
+    public ArrayList<Entry> readEntries() {
         String txt = "";
         try {
+            String movie;
+            float rating;
+            String comment;
             String row = "";
-
+            entryList = new ArrayList<>();
 
            /* ObjectInputStream in = new ObjectInputStream(context.openFileInput("testi.txt", Context.MODE_APPEND));
             while((s=in.readLine()) != null) {
@@ -85,8 +96,16 @@ class MovieManager {
 
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
             while ((row = br.readLine()) != null) {
-                System.out.println(row);
-                txt = txt + "\n" + row;
+                //System.out.println(row);
+                //txt = txt + "\n" + row;
+                String parts[] = row.split(";");
+                movie = parts[0];
+                comment = parts[1];
+                rating = Float.parseFloat(parts[2]);
+
+                Entry entry = new Entry(movie, rating, comment);
+                entryList.add(entry);
+                Collections.sort(entryList, Comparator.comparing(Entry::getNumberOfStars));
 
             }
 
@@ -94,6 +113,6 @@ class MovieManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return txt;
+        return entryList;
     }
 }
