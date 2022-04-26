@@ -1,6 +1,7 @@
 package com.example.project;
 
 import android.content.Context;
+import android.widget.TextView;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -25,20 +26,23 @@ class MovieManager {
 
     private MovieManager() {
     }
+
     public static MovieManager getInstance() {
         if (instance == null) {
             instance = new MovieManager();
         }
         return instance;
     }
-    public void setContext(Context c){
+
+    public void setContext(Context c) {
         context = c;
     }
+
     public void saveEntries(Entry e) {
 
         try {
 
-            OutputStreamWriter ous = new OutputStreamWriter(context.openFileOutput("testi.txt", Context.MODE_PRIVATE));
+            OutputStreamWriter ous = new OutputStreamWriter(context.openFileOutput("testi.csv", Context.MODE_PRIVATE));
             //float f;
             //String com = getEntry().getComment();
             //f = getEntry().getNumberOfStars();
@@ -47,7 +51,7 @@ class MovieManager {
             System.out.println("kirjoitettu");
             out.writeObject(e); // This can be a data structure
             out.close();*/
-            ous.write(e.getMovie()+e.getComment()+e.getNumberOfStars());
+            ous.write(e.getMovie() + e.getComment() + e.getNumberOfStars());
 
             //ous.write(com +";"+ Float.toString(f));
             ous.close();
@@ -58,12 +62,16 @@ class MovieManager {
 
 
     }
+
     public Entry getEntry() {
         return entry;
     }
-    public void readEntries() {
+
+    public String readEntries() {
+        String txt = "";
         try {
-            String s = "";
+            String row = "";
+
 
            /* ObjectInputStream in = new ObjectInputStream(context.openFileInput("testi.txt", Context.MODE_APPEND));
             while((s=in.readLine()) != null) {
@@ -73,16 +81,19 @@ class MovieManager {
             }
             in.close();*/
 
-            InputStream ins = context.openFileInput("testi.txt");
+            InputStream ins = context.openFileInput("testi.csv");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
-            while ((s=br.readLine()) != null) {
-                System.out.println(s);
-            }
-            ins.close();
-            } catch (IOException e) {
-                e.printStackTrace();
+            while ((row = br.readLine()) != null) {
+                System.out.println(row);
+                txt = txt + "\n" + row;
+
             }
 
+            ins.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return txt;
     }
 }
