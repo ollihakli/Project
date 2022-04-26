@@ -14,6 +14,11 @@ public class Entry implements Serializable {
         comment = com;
     }
 
+    @Override
+    public String toString() {
+        return '\'' + movie + '\'' + " Stars " + numberOfStars;
+    }
+
     public String getMovie() {
         return movie;
     }

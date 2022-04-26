@@ -105,7 +105,7 @@ class MovieManager {
 
                 Entry entry = new Entry(movie, rating, comment);
                 entryList.add(entry);
-                Collections.sort(entryList, Comparator.comparing(Entry::getNumberOfStars));
+
 
             }
 
@@ -113,6 +113,8 @@ class MovieManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Collections.sort(entryList, Comparator.comparing(Entry::getNumberOfStars));
+        Collections.reverse(entryList);
         return entryList;
     }
 }
