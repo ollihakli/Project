@@ -36,7 +36,7 @@ class MovieManager {
     public void saveEntries(Entry e) { //Saves user entries to CSV-file
 
         try {
-            OutputStreamWriter ous = new OutputStreamWriter(context.openFileOutput("testi.csv", Context.MODE_APPEND));
+            OutputStreamWriter ous = new OutputStreamWriter(context.openFileOutput("entries.csv", Context.MODE_APPEND));
             ous.write(e.getMovie() + ";" + e.getComment() + ";" + e.getNumberOfStars() + "\n");
             ous.close();
 
@@ -54,7 +54,7 @@ class MovieManager {
             String row = "";
             entryList = new ArrayList<>();
 
-            InputStream ins = context.openFileInput("testi.csv");
+            InputStream ins = context.openFileInput("entries.csv");
 
             BufferedReader br = new BufferedReader(new InputStreamReader(ins));
             while ((row = br.readLine()) != null) {
