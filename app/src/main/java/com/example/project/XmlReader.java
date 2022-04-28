@@ -15,11 +15,9 @@ import javax.xml.parsers.ParserConfigurationException;
 
 public class XmlReader {
 
-    private String name;
-
     public XmlReader() {}
 
-    public static ArrayList<Movie> readXml(ArrayList<Movie> movieList) {
+    public static ArrayList<Movie> readXml(ArrayList<Movie> movieList) { //Reads xml file and returns list of movies
         try {
             DocumentBuilder builder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
             String urlString = "https://www.finnkino.fi/xml/Events/";

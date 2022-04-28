@@ -16,7 +16,7 @@ public class EntryActivity extends AppCompatActivity {
     EditText comment;
     RatingBar ratingBar;
     float rateValue;
-    String commentText, movieName;
+    String commentText;
 
 
     @Override
@@ -52,11 +52,6 @@ public class EntryActivity extends AppCompatActivity {
                 Entry entry = new Entry(finalMoviename, rateValue, commentText);
                 MovieManager.getInstance().saveEntries(entry);
 
-
-                /*Stars star = new Stars();
-                star.setNumberOfStars(rateValue);
-                Comment com = new Comment();
-                com.setComment(commentText);*/
                 openMainActivity();
             }
             public void openMainActivity(){

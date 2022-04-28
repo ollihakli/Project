@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -52,7 +51,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public void listMovies(View v) {
         openBestMoviesActivity();
-        //MovieManager.getInstance().readEntries();
     }
     private void openBestMoviesActivity() {
         Intent intent = new Intent(MainActivity.this, BestMoviesActivity.class);

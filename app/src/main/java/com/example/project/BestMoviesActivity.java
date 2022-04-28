@@ -27,7 +27,6 @@ public class BestMoviesActivity extends AppCompatActivity {
         String s="";
         bestMovies = MovieManager.getInstance().readEntries();
         for(int i = 0; i < bestMovies.size(); i++) {
-            System.out.println(bestMovies.get(i));
             s = s + (i+1) + ". " + bestMovies.get(i) + "\n";
         }
         System.out.println(s);
